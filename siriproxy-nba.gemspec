@@ -2,15 +2,15 @@
 $:.push File.expand_path("../lib", __FILE__)
 
 Gem::Specification.new do |s|
-  s.name        = "siriproxy-NBA"
+  s.name        = "siriproxy-nba"
   s.version     = "0.0.1" 
   s.authors     = ["hagedorn"]
   s.email       = ["dtomcat@hotmial.com"]
-  s.homepage    = "http://google.com"
+  s.homepage    = "http://pachysoftware.com"
   s.summary     = %q{NBA Score Plugin}
   s.description = %q{This plugin gets scores from nba.com}
 
-  s.rubyforge_project = "siriproxy-NBA"
+  s.rubyforge_project = "siriproxy-nba"
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
