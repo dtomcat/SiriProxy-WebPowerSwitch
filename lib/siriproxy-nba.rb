@@ -61,6 +61,6 @@ class SiriProxy::Plugin::NBA < SiriProxy::Plugin
 		puts "[INFO - NBA] Getting Score/Game info for #{s_Team} (#{$sTeam})."
 		r = open(URI("#{self.url}?Team=#{$sTeam}")).read
 		say r
-                  request_completed
+                 request_completed
 	end 
 end
