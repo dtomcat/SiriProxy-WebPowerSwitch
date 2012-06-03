@@ -59,7 +59,7 @@ class SiriProxy::Plugin::NBA < SiriProxy::Plugin
 			else "Unknown"
 		end
 		puts $sTeam
-		r = open(URI("#{self.url}?Team=#{sTeam}")).read
+		r = open(URI("#{self.url}?Team=#{$sTeam}")).read
 		puts r
 	end 
 end
