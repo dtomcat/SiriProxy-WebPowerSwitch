@@ -4,6 +4,6 @@
 #NOTICE: Modifying these options in this file has no effect. You must put them in SiriProxy's config.yml!
 ##########################
     
-    - name: 'SiriHal'
+    - name: 'NBA'
       git: 'git://github.com/dtomcat/SiriProxy-NBA.git'
       url: 'http://www.yourserver.com/some.php'
