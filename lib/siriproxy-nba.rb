@@ -58,8 +58,8 @@ class SiriProxy::Plugin::NBA < SiriProxy::Plugin
 			when "kings" then "SAC"
 			else "Unknown"
 		end
-		puts $sTeam
+		puts "[INFO - NBA] Getting Score/Game info for #{s_Team} (#{$sTeam})."
 		r = open(URI("#{self.url}?Team=#{$sTeam}")).read
-		puts r
+		say r
 	end 
 end
