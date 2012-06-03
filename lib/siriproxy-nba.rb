@@ -60,7 +60,7 @@ class SiriProxy::Plugin::NBA < SiriProxy::Plugin
 		end
 		if($sTeam=="Unknown")
 			puts "[WARNING - NBA] #{s_Team} is not an NBA Team!"
-			say "I'm sorry, but #{s_Team} doesn't appear to be an NBA Team!"
+			say "I'm sorry, but the #{s_Team} doesn't appear to be an NBA Team!"
 			request_completed
 		else
 			puts "[INFO - NBA] Getting Score/Game info for #{s_Team} (#{$sTeam})."
