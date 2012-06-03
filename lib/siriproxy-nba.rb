@@ -5,7 +5,7 @@ require 'open-uri'
 require 'timeout'
 require 'pp'
 
-class SiriProxy::Plugin::SiriHal < SiriProxy::Plugin
+class SiriProxy::Plugin::NBA < SiriProxy::Plugin
 	attr_accessor :url
 
 	def initialize(config = {})
