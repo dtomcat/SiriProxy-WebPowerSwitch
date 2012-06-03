@@ -58,7 +58,7 @@ class SiriProxy::Plugin::NBA < SiriProxy::Plugin
 			when "kings" then "SAC"
 			else "Unknown"
 		end
-		sendUrl = "#{self.url}?Team=#{$sTeam}"
+		puts $sTeam
 		r = open(URI("#{self.url}?Team=#{sTeam}")).read
 		puts r
 	end 
