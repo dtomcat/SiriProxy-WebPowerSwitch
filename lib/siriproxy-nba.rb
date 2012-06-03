@@ -59,7 +59,7 @@ class SiriProxy::Plugin::NBA < SiriProxy::Plugin
 			else "Unknown"
 		end
 		sendUrl = "#{self.url}?Team=#{$sTeam}"
-		r = Net::HTTP.get_reponse( URI.parse( sendUrl ) )
+		r = open(URI("#{self.url}?Team=#{sTeam}")).read
 		puts r
 	end 
 end
