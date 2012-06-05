@@ -6,4 +6,5 @@
     
     - name: 'NBA'
       git: 'git://github.com/dtomcat/SiriProxy-NBA.git'
-      url: 'http://www.yourserver.com/some.php'
+      nba_url: 'http://www.yourserver.com/nbafile.php'
+      nfl_url: 'http://www.yourserver.com/nflfile.php'
