@@ -33,7 +33,7 @@ class SiriProxy::Plugin::NBA < SiriProxy::Plugin
 		get_NFL_score(qTeam,"reg")
 	end
 	#NFL Postseason
-         listen_for(/What's the (.*) postseason score/i) do |qTeam|
+        listen_for(/What's the (.*) postseason score/i) do |qTeam|
 		get_NFL_score(qTeam,"post")
 	end
 	listen_for(/What is the (.*) postseason score/i) do |qTeam|
