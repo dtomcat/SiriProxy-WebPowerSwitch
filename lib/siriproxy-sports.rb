@@ -77,11 +77,11 @@ class SiriProxy::Plugin::Sports < SiriProxy::Plugin
 			else "Unknown"
 		end
 		if($sTeam=="Unknown")
-			puts "[WARNING - NBA] #{s_Team} is not an NFL Team!"
+			puts "[WARNING - Sports (NFL)] #{s_Team} is not an NFL Team!"
 			say "I'm sorry, but the #{s_Team} doesn't appear to be an NFL Team!"
 			request_completed
 		else
-			puts "[INFO - NBA] Getting Score/Game info for #{s_Team} (#{$sTeam})."
+			puts "[Info - Sports (NFL)] Getting Score/Game info for #{s_Team} (#{$sTeam})."
 			if(s_season=="reg")
                                r = open(URI("#{self.nfl_url}?Team=#{$sTeam}")).read
                         else
@@ -127,11 +127,11 @@ class SiriProxy::Plugin::Sports < SiriProxy::Plugin
 			else "Unknown"
 		end
 		if($sTeam=="Unknown")
-			puts "[WARNING - NBA] #{s_Team} is not an NBA Team!"
+			puts "[WARNING - Sports (NBA)] #{s_Team} is not an NBA Team!"
 			say "I'm sorry, but the #{s_Team} doesn't appear to be an NBA Team!"
 			request_completed
 		else
-			puts "[INFO - NBA] Getting Score/Game info for #{s_Team} (#{$sTeam})."
+			puts "[Info - Sports (NBA)] Getting Score/Game info for #{s_Team} (#{$sTeam})."
 			r = open(URI("#{self.nba_url}?Team=#{$sTeam}")).read
 			say r
 	            request_completed
