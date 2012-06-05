@@ -9,22 +9,78 @@ class SiriProxy::Plugin::NBA < SiriProxy::Plugin
 	attr_accessor :url
 
 	def initialize(config = {})
-	self.url = config["url"]
+	self.nba_url = config["nba_url"]
+	self.nfl_url = config["nfl_url"]
 	end
 
 	$status = nil
 	$sTeam = nil
 
-	#Group Commands on
+	#NBA Scores
 	listen_for(/What's the (.*) basketball score/i) do |qTeam|
-		get_score(qTeam)
+		get_NBA_score(qTeam)
 	end
 	listen_for(/What is the (.*) basketball score/i) do |qTeam|
-		get_score(qTeam)
+		get_NBA_score(qTeam)
 	end
 	
+	#NFL Scores
+	listen_for(/What's the (.*) football score/i) do |qTeam|
+		get_NFL_score(qTeam)
+	end
+	listen_for(/What is the (.*) football score/i) do |qTeam|
+		get_NFL_score(qTeam)
+	end
+	
+	def get_NFL_score(s_Team)
+		$sTeam = case s_Team.downcase
+			when "cowboys" then "DAL"
+			when "giants" then "NYG"
+			when "colts" then "IND"
+			when "bears" then "CHI"
+			when "eagles" then "PHI"
+			when "browns" then "CLE"
+			when "rams" then "STL"
+			when "lions" then "DET"
+			when "dolphins" then "MIA"
+			when "texans" then "HOU"
+			when "falcons" then "ATL"
+			when "chiefs" then "KC"
+			when "jaguars" then "JAC"
+			when "vikings" then "MIN"
+			when "redskins" then "WAS"
+			when "saints" then "NO"
+			when "bills" then "BUF"
+			when "jets" then "NYJ"
+			when "patriots" then "NE"
+			when "titans" then "TEN"
+			when "seahawks" then "SEA"
+			when "cardinals" then "ARI"
+			when "49ers" then "SF"
+			when "packers" then "GB"
+			when "panthers" then "CAR"
+			when "buccaneers" then "TB"
+			when "steelers" then "PIT"
+			when "broncos" then "DEN"
+			when "bengals" then "CIN"
+			when "ravens" then "BAL"
+			when "chargers" then "SD"
+			when "raiders" then "OAK"
+			else "Unknown"
+		end
+		if($sTeam=="Unknown")
+			puts "[WARNING - NBA] #{s_Team} is not an NFL Team!"
+			say "I'm sorry, but the #{s_Team} doesn't appear to be an NFL Team!"
+			request_completed
+		else
+			puts "[INFO - NBA] Getting Score/Game info for #{s_Team} (#{$sTeam})."
+			r = open(URI("#{self.nfl_url}?Team=#{$sTeam}")).read
+			say r
+	            request_completed
+		end
+	end
 
-	def get_score(s_Team)
+	def get_NBA_score(s_Team)
 		$sTeam = case s_Team.downcase
 			when "celtics" then "BOS"
 			when "nets" then "NJN"
@@ -64,9 +120,9 @@ class SiriProxy::Plugin::NBA < SiriProxy::Plugin
 			request_completed
 		else
 			puts "[INFO - NBA] Getting Score/Game info for #{s_Team} (#{$sTeam})."
-			r = open(URI("#{self.url}?Team=#{$sTeam}")).read
+			r = open(URI("#{self.nba_url}?Team=#{$sTeam}")).read
 			say r
-	                request_completed
+	            request_completed
 		end
 	end 
 end
