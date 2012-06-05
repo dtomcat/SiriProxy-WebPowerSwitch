@@ -6,7 +6,8 @@ require 'timeout'
 require 'pp'
 
 class SiriProxy::Plugin::NBA < SiriProxy::Plugin
-	attr_accessor :url
+	attr_accessor :nba_url
+	attr_accessor :nfl_url
 
 	def initialize(config = {})
 	self.nba_url = config["nba_url"]
