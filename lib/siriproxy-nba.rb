@@ -27,13 +27,20 @@ class SiriProxy::Plugin::NBA < SiriProxy::Plugin
 	
 	#NFL Scores
 	listen_for(/What's the (.*) football score/i) do |qTeam|
-		get_NFL_score(qTeam)
+		get_NFL_score(qTeam,"reg")
 	end
 	listen_for(/What is the (.*) football score/i) do |qTeam|
-		get_NFL_score(qTeam)
+		get_NFL_score(qTeam,"reg")
+	end
+	#NFL Postseason
+         listen_for(/What's the (.*) postseason score/i) do |qTeam|
+		get_NFL_score(qTeam,"post")
+	end
+	listen_for(/What is the (.*) postseason score/i) do |qTeam|
+		get_NFL_score(qTeam,"post")
 	end
 	
-	def get_NFL_score(s_Team)
+	def get_NFL_score(s_Team,s_season)
 		$sTeam = case s_Team.downcase
 			when "cowboys" then "DAL"
 			when "giants" then "NYG"
@@ -75,7 +82,11 @@ class SiriProxy::Plugin::NBA < SiriProxy::Plugin
 			request_completed
 		else
 			puts "[INFO - NBA] Getting Score/Game info for #{s_Team} (#{$sTeam})."
-			r = open(URI("#{self.nfl_url}?Team=#{$sTeam}")).read
+			if(s_season=="reg")
+                               r = open(URI("#{self.nfl_url}?Team=#{$sTeam}")).read
+                           else
+                               r = open(URI("#{self.nfl_url}?Team=#{$sTeam}&Season=post")).read
+                           end
 			say r
 	            request_completed
 		end
