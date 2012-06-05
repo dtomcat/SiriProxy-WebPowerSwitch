@@ -83,12 +83,12 @@ class SiriProxy::Plugin::Sports < SiriProxy::Plugin
 		else
 			puts "[Info - Sports (NFL)] Getting Score/Game info for #{s_Team} (#{$sTeam})."
 			if(s_season=="reg")
-                               r = open(URI("#{self.nfl_url}?Team=#{$sTeam}")).read
+				r = open(URI("#{self.nfl_url}?Team=#{$sTeam}")).read
                         else
-                               r = open(URI("#{self.nfl_url}?Team=#{$sTeam}&Season=post")).read
+                        	r = open(URI("#{self.nfl_url}?Team=#{$sTeam}&Season=post")).read
                         end
 			say r
-	            request_completed
+	            	request_completed
 		end
 	end
 
@@ -134,7 +134,7 @@ class SiriProxy::Plugin::Sports < SiriProxy::Plugin
 			puts "[Info - Sports (NBA)] Getting Score/Game info for #{s_Team} (#{$sTeam})."
 			r = open(URI("#{self.nba_url}?Team=#{$sTeam}")).read
 			say r
-	            request_completed
+	            	request_completed
 		end
 	end 
 end
