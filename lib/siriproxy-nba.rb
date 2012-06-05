@@ -5,7 +5,7 @@ require 'open-uri'
 require 'timeout'
 require 'pp'
 
-class SiriProxy::Plugin::NBA < SiriProxy::Plugin
+class SiriProxy::Plugin::Sports < SiriProxy::Plugin
 	attr_accessor :nba_url
 	attr_accessor :nfl_url
 
