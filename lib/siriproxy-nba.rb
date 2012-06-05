@@ -84,9 +84,9 @@ class SiriProxy::Plugin::NBA < SiriProxy::Plugin
 			puts "[INFO - NBA] Getting Score/Game info for #{s_Team} (#{$sTeam})."
 			if(s_season=="reg")
                                r = open(URI("#{self.nfl_url}?Team=#{$sTeam}")).read
-                         else
+                        else
                                r = open(URI("#{self.nfl_url}?Team=#{$sTeam}&Season=post")).read
-                         end
+                        end
 			say r
 	            request_completed
 		end
