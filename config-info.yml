@@ -5,6 +5,5 @@
 ##########################
     
     - name: 'Sports'
-      git: 'git://github.com/dtomcat/SiriProxy-Sports.git'
-      nba_url: 'http://www.yourserver.com/nbafile.php'
-      nfl_url: 'http://www.yourserver.com/nflfile.php'
+      git: 'git://github.com/dtomcat/SiriProxy-WebPowerSwitch.git'
+      php_url: 'http://www.yourserver.com/nbafile.php'
