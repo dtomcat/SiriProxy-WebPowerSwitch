@@ -17,36 +17,38 @@ class SiriProxy::Plugin::WebPowerSwitch < SiriProxy::Plugin
 
 	#Check Outlet Status
 	listen_for(/What's the status of outlet (?:number)? (one|two|three|four|five|six|seven|eight)/i) do |qOutlet|
-		send_command_wps("STATUS",word_to_num(qOutlet))
+		command_wps("STATUS",word_to_num(qOutlet))
 	end
 	listen_for(/What is the status of outlet (?:number)? (one|two|three|four|five|six|seven|eight)/i) do |qOutlet|
-		send_command_wps("STATUS",word_to_num(qOutlet))
+		command_wps("STATUS",word_to_num(qOutlet))
 	end
 	
 	#Turn On/Off an Outlet
 	listen_for(/Turn (on|off) outlet (?:number)? (one|two|three|four|five|six|seven|eight)/i) do |qCmd, qOutlet|
-		send_command_wps(qCmd,word_to_num(qOutlet))
+		command_wps(qCmd,word_to_num(qOutlet))
 	end
 	listen_for(/Turn Outlet (?:number)? (one|two|three|four|five|six|seven|eight) (on|off)/i) do |qOutlet, qCmd|
-		send_command_wps(qCmd,word_to_num(qOutlet))
+		command_wps(qCmd,word_to_num(qOutlet))
 	end
 	
 	#Cycle an Outlet
 	listen_for(/Cycle (?:the power of)? outlet (?:number)? (one|two|three|four|five|six|seven|eight)/i) do |qOutlet|
-		send_command_wps("CCL",word_to_num(qOutlet))
+		command_wps("CCL",word_to_num(qOutlet))
 	end
 	
 	def word_to_num(wOutlet)
 		wordNum = Hash.new(10)
 		wordNum={"one" => 1,"two" => 2,"three" => 3, "four" => 4, "five" => 5, "six" => 6, "seven" => 7, "eight" => 8}
 		numC = wordNum[wOutlet.downcase]
+		puts "[Info - WebPowerSwitch] #{wOutlet} is now #{numC} 
 		return numC
 	end
 	
-	def send_command_wps(s_Cmd,s_Outlet)
+	def command_wps(s_Cmd,s_Outlet)
 		sCmd=s_Cmd.upcase
 		if(sCmd=="STATUS")
 			r = open(URI("#{self.php_url}?Cmd=#{sCmd}&Outlet=#{s_Outlet}")).read
+			puts "[DELETE ME] #{self.php_url}?Cmd=#{sCmd}&Outlet=#{s_Outlet}"
 			puts "[INFO - WebPowerSwitch] Status: Outlet #{s_Outlet} is #{r}!"
 			say "Outlet #{s_Outlet} is currently #{r}!"
 			request_completed
@@ -80,7 +82,7 @@ class SiriProxy::Plugin::WebPowerSwitch < SiriProxy::Plugin
 			else
 				response = ask "Outlet #{s_Outlet} appears to be off and cannot be cycled.  Would you like to turn it on instead?"
 				if(response =~ /yes/i)
-					send_command_wps("ON", s_Outlet)
+					command_wps("ON", s_Outlet)
 					request_completed
 				else
 					say "OK, I'll just leave it off!"
