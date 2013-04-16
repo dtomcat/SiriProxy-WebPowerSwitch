@@ -59,8 +59,9 @@ class SiriProxy::Plugin::WebPowerSwitch < SiriProxy::Plugin
 		elsif(sCmd=="ON" || sCmd=="OFF")
 			r = open(URI("#{self.php_url}?Cmd=#{sCmd}&Outlet=#{s_Outlet}")).read
 			if(r=="200")
-				say "#{sCmd} Sent!"
+				say "#{sCmd} command Sent!"
 				r = open(URI("#{self.php_url}?Cmd=STATUS&Outlet=#{s_Outlet}")).read
+				r = r.downcase
 				say "Outlet #{s_Outlet} is currently #{r}!"
 				puts "[Info - WebPowerSwitch] Outlet #{s_Outlet} Turned #{sCmd}."
 				request_completed
@@ -75,7 +76,7 @@ class SiriProxy::Plugin::WebPowerSwitch < SiriProxy::Plugin
 			if (ra[0]=="On")
 				r = open(URI("#{self.php_url}?Cmd=CCL&Outlet=#{s_Outlet}")).read
 				if(r=="200")
-					say "Command sent! Outlet #{s_Outlet} should be rebooting at this time."
+					say "Command sent! Outlet #{s_Outlet} should be cycling at this time."
 					puts "[Info - WebPowerSwitch] Cycle command sent to Outlet #{s_Outlet}!"
 					request_completed
 				else
