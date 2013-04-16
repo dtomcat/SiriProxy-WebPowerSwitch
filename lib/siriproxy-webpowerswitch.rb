@@ -71,7 +71,7 @@ class SiriProxy::Plugin::WebPowerSwitch < SiriProxy::Plugin
 					request_completed
 				end
 			else
-				response = ask "Outlet #{s_Outlet appears to be off and cannot be cycled.  Would you like to turn it on instead?"
+				response = ask "Outlet #{s_Outlet} appears to be off and cannot be cycled.  Would you like to turn it on instead?"
 				if(response =~ /yes/i)
 					send_command("ON", s_Outlet)
 					request_completed
