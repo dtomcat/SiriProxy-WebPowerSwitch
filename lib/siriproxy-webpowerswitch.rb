@@ -47,61 +47,41 @@ class SiriProxy::Plugin::WebPowerSwitch < SiriProxy::Plugin
 			r = open(URI("{self.php_url}?Cmd=#{sCmd}&Outlet=#{s_Outlet}")).read
 			if(r=="200")
 				say "#{sCmd} Sent!"
-				r = 
-			puts "[Info - Sports (NFL)] Getting Score/Game info for #{s_Team} (#{$sTeam})."
-			if(s_season=="reg")
-				r = open(URI("#{self.nfl_url}?Team=#{$sTeam}")).read
-                        else
-                        	r = open(URI("#{self.nfl_url}?Team=#{$sTeam}&Season=post")).read
-                        end
-			say r
-	            	request_completed
+				r = open(URI("#{self.php_url}?Cmd=STATUS&Outlet=#{s_Outlet}")).read
+				say "Outlet #{s_Outlet} is currently #{r}!"
+				puts "[Info - WebPowerSwitch] Outlet #{s_Outlet} Turned #{sCmd}."
+				request_completed
+			else
+				puts "[Warning - WebPowerSwitch] ERROR: #{r}"
+				say "Error communicating with Web Power Switch, please try again later!"
+				request_completed
+			end
+		elsif(sCmd=="CCL")
+			r = open(URI("#{self.php_url}?Cmd=STATUS&Outlet=#{s_Outlet}")).read
+			ra = r.split
+			if (ra[0]=="On")
+				r = open(URI("#{self.php_url}?Cmd=CCL&Outlet=#{s_Outlet}")).read
+				if(r=="200")
+					say "Command sent! Outlet #{s_Outlet} should be rebooting at this time."
+					puts "[Info - WebPowerSwitch] Cycle command sent to Outlet #{s_Outlet}!"
+					request_completed
+				else
+					puts "[Warning - WebPowerSwitch] ERROR: #{r}"
+					say "Error communicating with Web Power Switch, Please try again later!"
+					request_completed
+				end
+			else
+				response = ask "Outlet #{s_Outlet appears to be off and cannot be cycled.  Would you like to turn it on instead?"
+				if(response =~ /yes/i)
+					send_command("ON", s_Outlet)
+					request_completed
+				else
+					say "OK, I'll just leave it off!"
+					request_completed
+				end
+			end
+		else
+			say "I'm sorry, I don't know what to with that command!"
 		end
 	end
-
-	def get_NBA_score(s_Team)
-		$sTeam = case s_Team.downcase
-			when "celtics" then "BOS"
-			when "nets" then "NJN"
-			when "new york knicks" then "NYK"
-			when "76ers" then "PHI"
-			when "raptors" then "TOR"
-			when "mavericks" then "DAL"
-			when "rockets" then "HOU"
-			when "grizzlies" then "MEM"
-			when "hornets" then "NOH"
-			when "spurs" then "SAS"
-			when "hawks" then "ATL"
-			when "nuggets" then "DEN"
-			when "bobcats" then "CHA"
-			when "bulls" then "CHI"
-			when "cavaliers" then "CLE"
-			when "pistons" then "DET"
-			when "warriors" then "GSW"
-			when "pacers" then "IND"
-			when "clippers" then "LAC"
-			when "lakers" then "LAL"
-			when "heat" then "MIA"
-			when "bucks" then "MIL"
-			when "timberwolves" then "MIN"
-			when "jazz" then "UTA"
-			when "wizards" then "WAS"
-			when "suns" then "PHX"
-			when "magic" then "ORL"
-			when "thunder" then "OKC"
-			when "trailblazers" then "POR"
-			when "kings" then "SAC"
-			else "Unknown"
-		end
-		if($sTeam=="Unknown")
-			puts "[WARNING - Sports (NBA)] #{s_Team} is not an NBA Team!"
-			say "I'm sorry, but the #{s_Team} doesn't appear to be an NBA Team!"
-			request_completed
-		else
-			puts "[Info - Sports (NBA)] Getting Score/Game info for #{s_Team} (#{$sTeam})."
-			r = open(URI("#{self.nba_url}?Team=#{$sTeam}")).read
-			say r
-	            	request_completed
-		end
-	end 
 end
