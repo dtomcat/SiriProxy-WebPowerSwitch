@@ -17,23 +17,23 @@ class SiriProxy::Plugin::WebPowerSwitch < SiriProxy::Plugin
 
 	#Check Outlet Status
 	listen_for(/What's the status of outlet (?:number)? (one|two|three|four|five|six|seven|eight)/i) do |qOutlet|
-		send_command("STATUS",word_to_num(qOutlet))
+		send_command_wps("STATUS",word_to_num(qOutlet))
 	end
 	listen_for(/What is the status of outlet (?:number)? (one|two|three|four|five|six|seven|eight)/i) do |qOutlet|
-		send_command("STATUS",word_to_num(qOutlet))
+		send_command_wps("STATUS",word_to_num(qOutlet))
 	end
 	
 	#Turn On/Off an Outlet
 	listen_for(/Turn (on|off) outlet (?:number)? (one|two|three|four|five|six|seven|eight)/i) do |qCmd, qOutlet|
-		send_command(qCmd,word_to_num(qOutlet))
+		send_command_wps(qCmd,word_to_num(qOutlet))
 	end
 	listen_for(/Turn Outlet (?:number)? (one|two|three|four|five|six|seven|eight) (on|off)/i) do |qOutlet, qCmd|
-		send_command(qCmd,word_to_num(qOutlet))
+		send_command_wps(qCmd,word_to_num(qOutlet))
 	end
 	
 	#Cycle an Outlet
 	listen_for(/Cycle (?:the power of)? outlet (?:number)? (one|two|three|four|five|six|seven|eight)/i) do |qOutlet|
-		send_command("CCL",word_to_num(qOutlet))
+		send_command_wps("CCL",word_to_num(qOutlet))
 	end
 	
 	def word_to_num(wOutlet)
@@ -43,7 +43,7 @@ class SiriProxy::Plugin::WebPowerSwitch < SiriProxy::Plugin
 		return numC
 	end
 	
-	def send_command(s_Cmd,s_Outlet)
+	def send_command_wps(s_Cmd,s_Outlet)
 		sCmd=s_Cmd.upcase
 		if(sCmd=="STATUS")
 			r = open(URI("#{self.php_url}?Cmd=#{sCmd}&Outlet=#{s_Outlet}")).read
@@ -80,7 +80,7 @@ class SiriProxy::Plugin::WebPowerSwitch < SiriProxy::Plugin
 			else
 				response = ask "Outlet #{s_Outlet} appears to be off and cannot be cycled.  Would you like to turn it on instead?"
 				if(response =~ /yes/i)
-					send_command("ON", s_Outlet)
+					send_command_wps("ON", s_Outlet)
 					request_completed
 				else
 					say "OK, I'll just leave it off!"
