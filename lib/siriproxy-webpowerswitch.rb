@@ -16,7 +16,7 @@ class SiriProxy::Plugin::WebPowerSwitch < SiriProxy::Plugin
 	$Outlet = nil
 
 	#Check Outlet Status
-	listen_for(/What's the status of outlet (?:number)? (1|2|3|4|5|6|7|8)/i) do |qOutlet|
+	listen_for(/What's the status of outlet (?:number)? (one|two|three|four|five|six|seven|eight)/i) do |qOutlet|
 		send_command("STATUS",qOutlet)
 	end
 	listen_for(/What is the status of outlet (?:number)? (1|2|3|4|5|6|7|8)/i) do |qOutlet|
@@ -34,6 +34,13 @@ class SiriProxy::Plugin::WebPowerSwitch < SiriProxy::Plugin
 	#Cycle an Outlet
 	listen_for(/Cycle (?:the power of)? outlet (?:number)? (1|2|3|4|5|6|7|8)/i) do |qOutlet|
 		send_command("CCL",qOutlet)
+	end
+	
+	def word_to_numb(wOutlet)
+		wordNum = Hash.new(10)
+		wordNum={"one" => 1,"two" => 2,"three" => 3, "four" => 4, "five" => 5, "six" => 6, "seven" => 7, "eight" => 8}
+		numC = wordNum[wOutlet.lowercase]
+		return numC
 	end
 	
 	def send_command(s_Cmd,s_Outlet)
