@@ -9,7 +9,7 @@ class SiriProxy::Plugin::WebPowerSwitch < SiriProxy::Plugin
 	attr_accessor :php_url
 
 	def initialize(config = {})
-	self.nba_url = config["php_url"]
+	self.php_url = config["php_url"]
 	end
 
 	$Cmd = nil
