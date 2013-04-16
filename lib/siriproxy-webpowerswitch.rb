@@ -57,7 +57,7 @@ class SiriProxy::Plugin::WebPowerSwitch < SiriProxy::Plugin
 			say "Outlet #{s_Outlet} is currently #{r}!"
 			request_completed
 		elsif(sCmd=="ON" || sCmd=="OFF")
-			r = open(URI("{self.php_url}?Cmd=#{sCmd}&Outlet=#{s_Outlet}")).read
+			r = open(URI("#{self.php_url}?Cmd=#{sCmd}&Outlet=#{s_Outlet}")).read
 			if(r=="200")
 				say "#{sCmd} Sent!"
 				r = open(URI("#{self.php_url}?Cmd=STATUS&Outlet=#{s_Outlet}")).read
