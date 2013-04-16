@@ -39,7 +39,7 @@ class SiriProxy::Plugin::WebPowerSwitch < SiriProxy::Plugin
 	def word_to_num(wOutlet)
 		wordNum = Hash.new(10)
 		wordNum={"one" => 1,"two" => 2,"three" => 3, "four" => 4, "five" => 5, "six" => 6, "seven" => 7, "eight" => 8}
-		numC = wordNum[wOutlet.lowercase]
+		numC = wordNum[wOutlet.downcase]
 		return numC
 	end
 	
