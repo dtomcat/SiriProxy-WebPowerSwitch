@@ -16,27 +16,27 @@ class SiriProxy::Plugin::WebPowerSwitch < SiriProxy::Plugin
 	$Outlet = nil
 
 	#Check Outlet Status
-	listen_for(/What's the status of outlet (?:number)? (one|two|three|four|five|six|seven|eight)/i) do |qOutlet|
+	listen_for(/What's the status of outlet(?: number)? (one|two|three|four|five|six|seven|eight)/i) do |qOutlet|
 		command_wps("STATUS",word_to_num(qOutlet))
 	end
-	listen_for(/What is the status of outlet (?:number)? (one|two|three|four|five|six|seven|eight)/i) do |qOutlet|
+	listen_for(/What is the status of outlet(?: number)? (one|two|three|four|five|six|seven|eight)/i) do |qOutlet|
 		command_wps("STATUS",word_to_num(qOutlet))
 	end
 	
 	
 	
 	#Turn On/Off an Outlet
-	listen_for(/Turn (on|off) outlet (?:number)? (one|two|three|four|five|six|seven|eight)/i) do |qCmd, qOutlet|
+	listen_for(/Turn (on|off) outlet(?: number)? (one|two|three|four|five|six|seven|eight)/i) do |qCmd, qOutlet|
 		command_wps(qCmd,word_to_num(qOutlet))
 	end
-	listen_for(/Turn Outlet (?:number)? (one|two|three|four|five|six|seven|eight) (on|off)/i) do |qOutlet, qCmd|
+	listen_for(/Turn Outlet(?: number)? (one|two|three|four|five|six|seven|eight) (on|off)/i) do |qOutlet, qCmd|
 		command_wps(qCmd,word_to_num(qOutlet))
 	end
 	
 	
 	
 	#Cycle an Outlet
-	listen_for(/Cycle (?:the power of)? outlet (?:number)? (one|two|three|four|five|six|seven|eight)/i) do |qOutlet|
+	listen_for(/Cycle(?: the power of)? outlet(?: number)? (one|two|three|four|five|six|seven|eight)/i) do |qOutlet|
 		command_wps("CCL",word_to_num(qOutlet))
 	end
 	
